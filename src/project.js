@@ -2,9 +2,13 @@ export class Project {
     constructor(name,description){
         this.name = name;
         this.description = description;
-        this.content = [];
+        this.content = {};
+    }
+    updateInfo(name,description) {
+        this.name = name;
+        this.description = description;
     }
     addItem(item) {
-        this.content.push(item);
+        this.content[(item).title] = item;
     }
 }
