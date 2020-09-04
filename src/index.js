@@ -50,3 +50,6 @@ import {List_Controller} from "./List_Controller.js";
 
 ////List_Controller.removeProject('proj1');
 ////console.log(List_Controller.getContent());
+
+DOM_Controller.createNewProject('PROJECT2','PROJECT DESCRIPTION');
+DOM_Controller.createNewTodo('PROJECT2','todo2','20 days','medium','this is an example');
