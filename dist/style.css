@@ -1,0 +1,179 @@
+*{
+    margin:0px;
+    box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+    background-color: #f1faee;
+}
+
+header{
+    background-color: #1d3557;
+    border:solid black 1px;
+    height: 100px;
+}
+header h1 {
+    font-size: 72px;
+    margin: 0px 0.75em;
+    float:left;
+    color:white;
+}
+header button {
+    float: right;
+    height: 50px;
+    width:250px;
+    margin: 25px 50px;
+    outline: none;
+    color: wheat;
+    background-color: violet;
+}
+.project-card {
+    height: 600px;
+    width: 400px;
+    background-color: #f1faee;
+    margin: 1em;
+    border-radius: 60px;
+
+    box-shadow: 10px 10px 35px grey;
+}
+.project-card > div {
+    height: 75px;
+    width:100%;
+}
+.project-card > div:nth-child(1) {
+    border: solid 1px black;
+    border-radius: 60px 60px 0px 0px;
+    height:190px;
+    background-color: #457b9d;
+}
+.project-card > div:nth-child(1) h2 {
+    margin: 0em 0em 0px 1em;
+    font-size: 36px;
+    color:#f1faee;
+}
+.project-card > div:nth-child(1) p {
+    margin: 0.5em;
+}
+.project-card > div:nth-child(1) button {
+    margin: 5px;
+    outline: none;
+    border-radius: 50px;
+    color: grey;
+    font-size: 20px;
+}
+.project-card > div:nth-child(2) {
+    border: solid 1px grey;
+    height: 340px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background-color: #f1faee;
+}
+.project-card > div:nth-child(3) {
+    border: solid 1px black;
+    border-radius: 0px 0px 60px 60px;
+    background-color: #457b9d;
+    height: 70px;
+}
+.project-card > div:nth-child(3) button {
+    width:70%;
+    margin-left: 15%;
+    margin-top: 10px;
+
+    border-radius: 0px 0px 60px 60px;
+    height:40px;
+
+    outline: none;
+
+    background-color: #f1faee;
+    border:none;
+
+    position:relative;
+    bottom:0px;
+    transition:bottom 0.2s;
+}
+.project-card > div:nth-child(3) button:hover {
+    bottom:2px;
+}
+.project-card > div:nth-child(3) button:active {
+    bottom:-1px;
+}
+.todo-item {
+    height: 70px;
+    width: 100%;
+    border: solid lightgrey 1px;
+
+    transition: height 0.5s;
+}
+.todo-main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70px 210px 100px 20px;
+    grid-template-rows: 70px;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.todo-main input[type="checkbox"]{
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+}
+.todo-main p {
+    font-size: 28px;
+    padding-top: 10px;
+}
+
+.priority {
+    border-radius: 60px 0px 0px 60px;
+}
+
+.red {
+    background-color: #e63946;
+}
+.expand {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70px 210px 60px 60px;
+    grid-template-rows: 50px;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    border:blue solid 0px;
+
+
+    opacity:0;
+    transition: opacity 1s,bottom 0.5s;
+    position: relative;
+    bottom: 30px;
+
+    overflow: hidden;
+}
+.expand button {
+    margin: 5px;
+    outline: none;
+    border-radius: 50px;
+}
+.expand p {
+    font-size: 12px;
+}
+.todo-item:hover {
+    height:125px;
+}
+.todo-item:hover > .expand {
+    opacity:1;
+    bottom:0px;
+}
+.todo-main input:checked + p{
+    text-decoration: line-through;
+    text-decoration-color: grey;
+}
+.expand button:nth-of-type(1) {
+    color: grey;
+    font-size: 20px;
+}
+.expand button:nth-of-type(2) {
+    background-color: #e63946;
+    color:white;
+}
