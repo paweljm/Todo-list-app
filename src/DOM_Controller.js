@@ -1,6 +1,10 @@
 const DOM_Controller = (() => {
     const container = document.querySelector('.project-container');
 
+    const clear = () => {
+        container.innerHTML = '';
+    }
+
     const createNewProject = (projName,projDesc) => {
         //creating the card container and appending to container
         let projectCard = document.createElement('div');
@@ -31,10 +35,9 @@ const DOM_Controller = (() => {
         //creating content for div 3 and appending;
         let addButton = document.createElement('button');
         let addIcon = document.createElement('i');
+        addButton.classList.add('add-todo-btn');
         addIcon.classList.add('fas');
         addIcon.classList.add('fa-plus');
-        div3.appendChild(addButton);
-        addButton.appendChild(addIcon);
     }
 
     const createNewTodo = (parent,todoName,dueDate,priority,todoDesc) => {
@@ -89,7 +92,7 @@ const DOM_Controller = (() => {
         editBtn.appendChild(editIcon);
         deleteBtn.appendChild(deleteIcon);
     }
-    return {createNewProject,createNewTodo}
+    return {createNewProject,createNewTodo,clear}
 })();
 
 export {DOM_Controller}

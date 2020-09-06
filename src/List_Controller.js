@@ -8,7 +8,7 @@ const List_Controller = (() => {
     }
     const getContent = () => {
         return mainContent;
-    };
+    }
     const removeProject = (projectName) => {
         delete mainContent[projectName];
     }

@@ -1,55 +1,82 @@
 import {format} from "date-fns";
+import { formatDistanceToNow } from 'date-fns'
 import {Item} from "./item.js";
 import {Project} from "./project.js";
 import {DOM_Controller} from "./DOM_Controller.js"
 import {List_Controller} from "./List_Controller.js";
-//let date1 = format(new Date(2014, 1, 11), 'MM/dd/yyyy');
-
-//console.log('test');
-//console.log(date1);
-
-// localStorage.setItem('test','HELLO');
-//console.log(localStorage.getItem('test'));
-//localStorage.clear();
-//console.log(localStorage.getItem('test'));
 
 
-//let item1 = new Item('item1','this is an example item','now','high');
-//console.log(item1);
+let main = new Project('Main','');
+List_Controller.addProject(main);
+//let todo1 = new Item('todo1','this is a description','2 days','high');
+//List_Controller.addTodo(main,todo1);
+//let todo2 = new Item('todo2','this is a description','2 days','high');
+//List_Controller.addTodo(main,todo2);
 
-//let proj1 = new Project('project1','default project');
-//console.log(proj1);
-//proj1.addItem(item1);
-//console.log(proj1.content);
+const newProjButton = document.querySelector('#new-proj-btn');
+newProjButton.addEventListener('click', (e) => {
+    let currentProj;
+    let nameInput = document.querySelector('#project-name-input');
+    let descInput = document.querySelector('#project-description-input');
+    currentProj = new Project(nameInput.value,descInput.value)
+    let container = document.querySelector('.add-project-menu');
+    List_Controller.addProject(currentProj);
+    console.log(List_Controller.getContent());
+    update();
+})
+const newTodoButton = document.querySelector('#new-todo-btn');
+newTodoButton.addEventListener('click',(e) =>{
+    let currentTodo;
 
-////console.log(List_Controller.getContent());
-////let p_name = prompt('project name:');
-////let p_desc = prompt('project desc:');
-//mainContent[(p_name)] = new Project(p_name,p_desc);
-////let proj = new Project(p_name,p_desc);
-////List_Controller.addProject(proj);
-////console.table(List_Controller.getContent());
-////console.log(List_Controller.getContent());
-////let i_name = prompt('item name');
-////let i_desc = prompt('item description');
-////let i_duedate = prompt('item due');
-////let i_prio = prompt('item priority');
-////let item1 = new Item(i_name,i_desc,i_duedate,i_prio);
+    let projSelector = document.querySelector('#projects-select');
+    let nameInput = document.querySelector('#todo-name-input');
+    let descInput = document.querySelector('#todo-description-input');
+    let dateInput = document.querySelector('#todo-date-input');
+    let prioritySelector = document.querySelector('#priority-select');
 
-//mainContent[(p_name)].addItem((new Item(i_name,i_desc,i_duedate,i_prio)));
-////List_Controller.addTodo(proj,item1)
+    let projVal = projSelector.value;
+    let nameVal = nameInput.value;
+    let descVal = descInput.value;
+    let dateVal = dateInput.value;
+    let priorityVal = prioritySelector.value;
 
+    let mainContent = List_Controller.getContent();
+    let project = mainContent[projVal];
+    console.log(project);
 
-////console.log(List_Controller.getContent());
+    dateVal = new Date(dateVal);
 
-////let objTest = JSON.stringify(List_Controller.getContent());
-////console.log(objTest);
+    dateVal = formatDistanceToNow(new Date(dateVal),{addSuffix:true});
+    //console.log(dateVal);
+    currentTodo = new Item(nameVal,descVal,dateVal,priorityVal);
+    List_Controller.addTodo(project,currentTodo);
+    console.log(currentTodo);
 
-////List_Controller.removeTodo('proj1','todo1');
-////console.log(List_Controller.getContent());
+    update();
 
-////List_Controller.removeProject('proj1');
-////console.log(List_Controller.getContent());
-
-DOM_Controller.createNewProject('PROJECT2','PROJECT DESCRIPTION');
-DOM_Controller.createNewTodo('PROJECT2','todo2','20 days','medium','this is an example');
+});
+function update() {
+    DOM_Controller.clear();
+    let mainContent = List_Controller.getContent();
+    console.log(mainContent);
+    let select = document.querySelector('#projects-select');
+    select.innerHTML ='';
+    for (const [key,value] of Object.entries(mainContent)){
+        //
+        let option = document.createElement('option');
+        select.appendChild(option);
+        option.value = key;
+        option.textContent = key;
+        //
+        console.log(key,value.description);
+        console.log(value.content);
+        DOM_Controller.createNewProject(key,value.description);
+        let currContent = value.content;
+        Object.entries(currContent).forEach(entry =>{
+            //console.log(entry[1].description);
+            console.log(key,entry[1].title,entry[1].dueDate,entry[1].priority,entry[1].description);
+            DOM_Controller.createNewTodo(key,entry[1].title,entry[1].dueDate,entry[1].priority,entry[1].description);
+        })
+    }
+}
+update();

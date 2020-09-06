@@ -4,7 +4,9 @@
     font-family: 'Noto Sans JP', sans-serif;
     user-select: none;
 }
-
+html, body {
+    height:100%;
+}
 body {
     background-color: #f1faee;
 }
@@ -129,7 +131,9 @@ header button {
     font-size: 28px;
     padding-top: 10px;
 }
-
+.todo-main p:nth-of-type(2) {
+    font-size: 20px;
+}
 .priority {
     border-radius: 60px 0px 0px 60px;
 }
@@ -180,4 +184,36 @@ header button {
 .expand button:nth-of-type(2) {
     background-color: #e63946;
     color:white;
+}
+.sidebar {
+    position: fixed;
+    top: 20%;
+    left: 70%;
+    background-color: #1d3557;
+    padding: 1em;
+    border-radius: 10px;
+}
+.sidebar input[type="text"] {
+    width: 300px;
+    height: 50px;
+    font-size: 28px;
+    outline:none;
+}
+.sidebar p {
+    font-size: 36px;
+    text-align: center;
+    color: #f1faee;
+}
+.sidebar button{
+    width: 250px;
+    height: 35px;
+    outline: none;
+    margin-left:25px;
+}
+.sidebar label {
+    font-size: 20px;
+    color: #f1faee;
+}
+.sidebar * {
+    margin-top: 0.5em;
 }

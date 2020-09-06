@@ -11,7 +11,6 @@
 <body>
     <header>
         <h1>To-do List</h1>
-        <button>Add Project</button>
     </header>
     <div class="project-container">
         <div class="project-card">
@@ -44,50 +43,6 @@
                     </div>
                     <div class="expand">
                         <br>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque, maxime?</p>
-                        <button><i class="fas fa-pen-square"></i></button>
-                        <button><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                    
-                </div>
-                <div class="todo-item">
-                    <div class="todo-main">
-                        <input type="checkbox" name="done" id="done">
-                        <p>Todo 1</p>
-                        <p>8 days</p>
-                        <div class="priority red"></div>
-                    </div>
-                    <div class="expand">
-                        <br>
-                        <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        <button><i class="fas fa-pen-square"></i></button>
-                        <button><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                    
-                </div>
-                <div class="todo-item">
-                    <div class="todo-main">
-                        <input type="checkbox" name="done" id="done">
-                        <p>Todo 1</p>
-                        <p>8 days</p>
-                        <div class="priority red"></div>
-                    </div>
-                    <div class="expand">
-                        <br>
-                        <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        <button><i class="fas fa-pen-square"></i></button>
-                        <button><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                </div>
-                <div class="todo-item">
-                    <div class="todo-main">
-                        <input type="checkbox" name="done" id="done">
-                        <p>Todo 1</p>
-                        <p>8 days</p>
-                        <div class="priority red"></div>
-                    </div>
-                    <div class="expand">
-                        <br>
                         <p>Lorem ipsum dolor sit amet consectetur.</p>
                         <button><i class="fas fa-pen-square"></i></button>
                         <button><i class="fas fa-trash-alt"></i></button>
@@ -97,6 +52,39 @@
             <div>
                 <button><i class="fas fa-plus"></i></button>
             </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="add-project-menu">
+            <p>New Project</p>
+            <input type="text" id="project-name-input" placeholder="Name">
+            <br>
+            <input type="text" id="project-description-input" placeholder="Description">
+            <br>
+            <button id="new-proj-btn">Add</button>
+        </div>
+        <div class="add-todo-menu">
+            <p>New Todo</p>
+            <label for="projects-select">Project:
+                <select name="projects-select" id="projects-select">
+                </select>
+            </label>
+            <br>
+            <input type="text" id="todo-name-input" placeholder="Name">
+            <br>
+            <input type="text" id="todo-description-input" placeholder="Description">
+            <br>
+            <label for="todo-date-input">Date due:
+                <input type="date" name="todo-date-input" id="todo-date-input">
+            </label>
+            <label for="priority-select">Priority:
+                <select name="priority-select" id="priority-select">
+                    <option value="high">high</option>
+                    <option value="medium">medium</option>
+                    <option value="low">low</option>
+                </select>
+            </label>
+            <button id="new-todo-btn">Add</button>
         </div>
     </div>
     <script src="main.js"></script>
