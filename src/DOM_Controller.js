@@ -21,6 +21,7 @@ const DOM_Controller = (() => {
         projectCard.appendChild(div3);
         //adding content to div 1 and appending
         let editTitleBtn = document.createElement('button');
+        editTitleBtn.classList.add('proj-edit-button')
         let editIcon = document.createElement('i');
         editIcon.classList.add('fas');
         editIcon.classList.add('fa-pen-square');
@@ -28,7 +29,7 @@ const DOM_Controller = (() => {
         div1.appendChild(editTitleBtn);
         let projectName = document.createElement('h2');
         let projectDesc = document.createElement('p');
-        projectName.textContent = projName;
+        projectName.textContent = projName.replace(/-/g,' ');
         projectDesc.textContent = projDesc;
         div1.appendChild(projectName);
         div1.appendChild(projectDesc);
@@ -40,7 +41,8 @@ const DOM_Controller = (() => {
         addIcon.classList.add('fa-plus');
     }
 
-    const createNewTodo = (parent,todoName,dueDate,priority,todoDesc) => {
+
+    const createNewTodo = (parent,todoName,dueDate,priority,todoDesc, done = false) => {
         //create main div and append to parent
         let parentContainer = document.querySelector(`#${parent}`).childNodes[1];
         let container = document.createElement('div');
@@ -49,6 +51,8 @@ const DOM_Controller = (() => {
         //create divs for inside the 'container'
         let main = document.createElement('div')
         main.classList.add('todo-main');
+        let todoNameHyphen = todoName.replace(/ /g,'-');
+        container.setAttribute('id',`${parent}-${todoNameHyphen}`)
         let expand = document.createElement('div');
         expand.classList.add('expand');
         container.appendChild(main);
@@ -57,6 +61,9 @@ const DOM_Controller = (() => {
         let check = document.createElement('input');
         check.setAttribute('type','checkbox');
         check.setAttribute('name','done');
+        if (done == true) {
+            check.setAttribute('checked','true');
+        }
         main.appendChild(check);
         let todoTitle = document.createElement('p');
         todoTitle.textContent = todoName;
@@ -90,9 +97,86 @@ const DOM_Controller = (() => {
         deleteIcon.classList.add('fas');
         deleteIcon.classList.add('fa-trash-alt');
         editBtn.appendChild(editIcon);
+        editBtn.classList.add('todo-edit-button');
         deleteBtn.appendChild(deleteIcon);
+        deleteBtn.classList.add('todo-delete-button');
     }
-    return {createNewProject,createNewTodo,clear}
+
+    const editTodo = (parent,todo) => {
+        let item = document.querySelector(`#${parent}-${todo}`);
+        let titleText = item.childNodes[0].childNodes[1];
+        let dateText = item.childNodes[0].childNodes[2];
+        let priorityDisplay = item.childNodes[0].childNodes[3];
+        let descText = item.childNodes[1].childNodes[1];
+
+        let titleInput = document.createElement('input');
+        titleInput.setAttribute('id','item-input-name');
+        titleInput.value = titleText.textContent;
+        let dateInput = document.createElement('input');
+        dateInput.setAttribute('type','date')
+        dateInput.setAttribute('id','item-input-date');
+        dateInput.value = dateText.textContent;
+        let prioritySelect = document.createElement('select');
+        prioritySelect.setAttribute('id','item-priority-select');
+        let optionHigh = document.createElement('option');
+        optionHigh.value = 'high';
+        optionHigh.textContent = 'high';
+        let optionMed = document.createElement('option');
+        optionMed.textContent = 'medium'
+        optionMed.value = 'medium'
+        let optionLow = document.createElement('option');
+        optionLow.textContent = 'low';
+        optionLow.value = 'low';
+        prioritySelect.appendChild(optionHigh);
+        prioritySelect.appendChild(optionMed);
+        prioritySelect.appendChild(optionLow);
+        let descInput = document.createElement('input');
+        descInput.setAttribute('id','item-input-desc');
+        descInput.value = descText.textContent;
+
+        let br = item.childNodes[1].childNodes[0];
+
+
+        titleText.replaceWith(titleInput);
+        dateText.replaceWith(dateInput);
+        br.replaceWith(prioritySelect);
+        descText.replaceWith(descInput);
+
+        let editBtn = item.childNodes[1].childNodes[2];
+        let confirmButton = document.createElement('button');
+        confirmButton.setAttribute('id','item-confirm-button');
+        confirmButton.classList.add('fas');
+        confirmButton.classList.add('fa-check');
+        editBtn.replaceWith(confirmButton);
+
+    }
+
+    const editProject = (project) => {
+        let proj = document.querySelector(`#${project}`);
+        let titleText = proj.childNodes[0].childNodes[1];
+        let descText = proj.childNodes[0].childNodes[2];
+        let editBtn = proj.childNodes[0].childNodes[0];
+        let titleInput = document.createElement('input');
+        titleInput.setAttribute('id','proj-new');
+        titleInput.value = titleText.textContent;
+        let descInput = document.createElement('input');
+        descInput.setAttribute('id','desc-new');
+        descInput.value = descText.textContent;
+        titleText.replaceWith(titleInput);
+        descText.replaceWith(descInput);
+        let confirmBtn = document.createElement('button');
+        confirmBtn.classList.add('fas');
+        confirmBtn.classList.add('fa-check');
+        editBtn.replaceWith(confirmBtn);
+        confirmBtn.setAttribute('id','confirm-button');
+        
+        let deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('fas');
+        deleteBtn.classList.add('fa-trash-alt');
+        proj.childNodes[0].appendChild(deleteBtn);
+        deleteBtn.setAttribute('id','delete-proj-btn');
+    }
+    return {createNewProject,createNewTodo,clear,editProject,editTodo}
 })();
 
 export {DOM_Controller}

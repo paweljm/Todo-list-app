@@ -17,11 +17,18 @@ const newProjButton = document.querySelector('#new-proj-btn');
 newProjButton.addEventListener('click', (e) => {
     let currentProj;
     let nameInput = document.querySelector('#project-name-input');
+    let nameInputVal = nameInput.value;
+    nameInputVal = nameInputVal.replace(/ /g,'-');
+    console.log(nameInputVal);
     let descInput = document.querySelector('#project-description-input');
-    currentProj = new Project(nameInput.value,descInput.value)
+    currentProj = new Project(nameInputVal,descInput.value);
     let container = document.querySelector('.add-project-menu');
     List_Controller.addProject(currentProj);
     console.log(List_Controller.getContent());
+
+    nameInput.value = '';
+    descInput.value = '';
+
     update();
 })
 const newTodoButton = document.querySelector('#new-todo-btn');
@@ -52,9 +59,15 @@ newTodoButton.addEventListener('click',(e) =>{
     List_Controller.addTodo(project,currentTodo);
     console.log(currentTodo);
 
+    nameInput.value = '';
+    descInput.value = '';
+    dateInput.value = '';
+
     update();
 
 });
+
+
 function update() {
     DOM_Controller.clear();
     let mainContent = List_Controller.getContent();
@@ -66,11 +79,11 @@ function update() {
         let option = document.createElement('option');
         select.appendChild(option);
         option.value = key;
-        option.textContent = key;
+        option.textContent = value.name;
         //
         console.log(key,value.description);
         console.log(value.content);
-        DOM_Controller.createNewProject(key,value.description);
+        DOM_Controller.createNewProject(value.name,value.description);
         let currContent = value.content;
         Object.entries(currContent).forEach(entry =>{
             //console.log(entry[1].description);
@@ -78,5 +91,77 @@ function update() {
             DOM_Controller.createNewTodo(key,entry[1].title,entry[1].dueDate,entry[1].priority,entry[1].description);
         })
     }
+    let editProjBtnList = document.querySelectorAll('.proj-edit-button');
+    console.log(editProjBtnList);
+    editProjBtnList.forEach(element => {
+        element.addEventListener('click',(e)=>{
+            let workingProjectName = element.parentNode.parentNode.getAttribute('id');
+            let workingDiv = element.parentNode.parentNode;
+            console.log(workingProjectName);
+            DOM_Controller.editProject(workingProjectName);
+            let confirmButton = document.querySelector('#confirm-button');
+            confirmButton.addEventListener('click',(e)=>{
+                let nameInput = document.querySelector('#proj-new');
+                let descInput = document.querySelector('#desc-new');
+
+                workingDiv.setAttribute('id',(nameInput.value).replace(/ /g,'-'));
+
+                console.log(nameInput.value);
+                console.log(descInput.value);
+                List_Controller.editProject(workingProjectName,(nameInput.value).replace(/ /g,'-'),descInput.value);
+                update();
+            })
+            let deleteButton = document.querySelector('#delete-proj-btn');
+            deleteButton.addEventListener('click',(e) => {
+                List_Controller.removeProject(workingProjectName);
+                update();
+            })
+        })
+    let editTodoBtnList = document.querySelectorAll('.todo-edit-button');
+    editTodoBtnList.forEach(element => {
+        element.addEventListener('click',(e) => {
+            let workingProject = element.parentNode.parentNode.parentNode.parentNode;
+            let workingProjectName = element.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+            let workingTodo = element.parentNode.parentNode;
+            let workingTodoName =element.parentNode.parentNode.getAttribute('id');
+            let todoName = workingTodoName.replace(`${workingProjectName}-`,'');
+
+
+            DOM_Controller.editTodo(workingProjectName,todoName);
+            
+            let confirmButton = document.querySelector('#item-confirm-button');
+            confirmButton.addEventListener('click',(e) => {
+                let titleValue = workingTodo.childNodes[0].childNodes[1].value;
+                let dateVal = workingTodo.childNodes[0].childNodes[2].value;
+                let priorityVal = workingTodo.childNodes[1].childNodes[0].value;
+                let descVal = workingTodo.childNodes[1].childNodes[0].value;
+
+                dateVal = formatDistanceToNow(new Date(dateVal),{addSuffix:true});
+
+                List_Controller.editTodo(workingProjectName,todoName,titleValue,descVal,dateVal,priorityVal);
+                update();
+            })
+
+        })
+    })
+    let deleteBtnList = document.querySelectorAll('.todo-delete-button');
+    deleteBtnList.forEach(element => {
+        element.addEventListener('click',(e) =>{
+            let workingProject = element.parentNode.parentNode.parentNode.parentNode;
+            let workingProjectName = element.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+            console.log(workingProjectName);
+            let workingTodo = element.parentNode.parentNode;
+            let workingTodoName =element.parentNode.parentNode.getAttribute('id');
+            console.log(workingTodoName);
+            let todoName = workingTodoName.replace(`${workingProjectName}-`,'');
+            List_Controller.removeTodo(workingProjectName,todoName);
+            console.table(List_Controller.getContent());
+            update();
+        })
+    })
+    let editBtnList = document.querySelectorAll('.todo-edit-button');
+    //
+    });
+    //List_Controller.localStorageUpdate();
 }
 update();
