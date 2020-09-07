@@ -1,8 +1,8 @@
 export class Project {
-    constructor(name,description){
+    constructor(name,description, content = {}){
         this.name = name;
         this.description = description;
-        this.content = {};
+        this.content = content;
     }
     updateInfo(name,description) {
         this.name = name;

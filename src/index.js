@@ -8,6 +8,9 @@ import {List_Controller} from "./List_Controller.js";
 
 let main = new Project('Main','');
 List_Controller.addProject(main);
+
+List_Controller.createFromLocal();
+
 //let todo1 = new Item('todo1','this is a description','2 days','high');
 //List_Controller.addTodo(main,todo1);
 //let todo2 = new Item('todo2','this is a description','2 days','high');
@@ -162,6 +165,7 @@ function update() {
     let editBtnList = document.querySelectorAll('.todo-edit-button');
     //
     });
-    //List_Controller.localStorageUpdate();
+    List_Controller.localStorageUpdate();
+    console.log(List_Controller.getContent());
 }
 update();
